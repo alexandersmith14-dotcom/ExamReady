@@ -383,18 +383,16 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
     would look like — no obligation.</p>
   <form class="ctaform" id="leadForm">
     <label class="full">Name
-      <input type="text" name="entry.1922102206" required>
+      <input type="text" name="name" required>
     </label>
     <label>Email
-      <input type="email" name="entry.1102307164" required>
+      <input type="email" name="email" required>
     </label>
     <label>Bank / Institution
-      <input type="text" name="entry.1408958170">
+      <input type="text" name="institution">
     </label>
     <label>Role / Title</label>
-    <input type="text" name="entry.798939544" style="grid-column:1/-1;margin-top:-8px">
-    <input type="hidden" name="entry.957680240" id="hiddenScore">
-    <input type="hidden" name="entry.52124054" id="hiddenGaps">
+    <input type="text" name="role" style="grid-column:1/-1;margin-top:-8px">
     <button type="submit">Send my results &amp; get help</button>
     <div class="ctastatus" id="ctaStatus"></div>
     <div class="ctadisclaimer">This checklist is a self-assessment tool for
@@ -576,6 +574,8 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   var STORAGE_KEY = 'examready_' + DATA.regulator + '_' + DATA.examArea;
   var VALUES = {have:1, partial:0.5, missing:0};
   var LABELS = {have:'Have', partial:'Partial', missing:'Missing'};
+  var currentScoreText = '';
+  var currentGapsText = '';
 
   var state = {};
   try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { state = {}; }
@@ -696,7 +696,7 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
     fg.setAttribute('stroke-dasharray', (circumference * pct/100) + ' ' + circumference);
     fg.setAttribute('stroke', answered === 0 ? 'var(--track)' : b.color);
 
-    document.getElementById('hiddenScore').value = pct + '% (' + have + ' have / ' + partial + ' partial / ' + missing + ' missing / ' + unanswered + ' unanswered of ' + total + ')';
+    currentScoreText = pct + '% (' + have + ' have / ' + partial + ' partial / ' + missing + ' missing / ' + unanswered + ' unanswered of ' + total + ')';
   }
 
   function renderGaps(){
@@ -716,7 +716,7 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
       empty.className = 'gapempty';
       empty.textContent = 'No gaps yet — mark items above to see them here.';
       list.appendChild(empty);
-      document.getElementById('hiddenGaps').value = '';
+      currentGapsText = '';
       return;
     }
     gapsBySection.forEach(function(g){
@@ -731,9 +731,9 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
       row.appendChild(txt);
       list.appendChild(row);
     });
-    document.getElementById('hiddenGaps').value = gapsBySection
+    currentGapsText = gapsBySection
       .map(function(g){ return '[' + LABELS[g.v] + '] ' + g.sec + ': ' + g.text; })
-      .join(' | ');
+      .join('\n');
   }
 
   function resetAll(){
@@ -752,36 +752,39 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
     if (confirm('Clear all answers and start over?')) resetAll();
   });
 
-  // Google Forms submission (free, unlimited). no-cors means we can't read
-  // the response status, so a resolved fetch is treated as success -- that's
-  // the standard/only way to POST to forms.google.com's /formResponse from
-  // outside the form's own page.
-  var GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSc9kT-jbHOfPrNXg6DENy3wrMZc0yxZK2QYy4g5glsPDxo3FA/formResponse';
-  document.getElementById('leadForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    var form = e.target;
-    var statusEl = document.getElementById('ctaStatus');
-    var btn = form.querySelector('button[type="submit"]');
-    statusEl.textContent = '';
-    statusEl.className = 'ctastatus';
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
+  // Opens a prefilled email to the advisory team via mailto: -- no third
+  // party service to configure or debug, works everywhere a mail client is
+  // set up. The visitor's mail app handles actually sending it.
+  var LEAD_EMAIL = 'asmith@kaufmanrossin.com';
+  var leadForm = document.getElementById('leadForm');
+  var statusEl = document.getElementById('ctaStatus');
+  var submitBtn = leadForm.querySelector('button[type="submit"]');
 
-    fetch(GOOGLE_FORM_ACTION, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: new FormData(form)
-    }).then(function(){
-      statusEl.textContent = 'Thanks — we’ll be in touch shortly.';
-      statusEl.className = 'ctastatus ok';
-      form.reset();
-      btn.textContent = 'Sent';
-    }).catch(function(err){
-      statusEl.textContent = 'Could not send: ' + err.message + '. Try again or email us directly.';
-      statusEl.className = 'ctastatus err';
-      btn.disabled = false;
-      btn.textContent = 'Send my results & get help';
-    });
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = leadForm.elements['name'].value;
+    var email = leadForm.elements['email'].value;
+    var institution = leadForm.elements['institution'].value;
+    var role = leadForm.elements['role'].value;
+
+    var subject = 'BSA/AML Checklist results — ' + name + (institution ? ' (' + institution + ')' : '');
+    var body =
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Institution: ' + (institution || '—') + '\n' +
+      'Role: ' + (role || '—') + '\n' +
+      'Readiness score: ' + currentScoreText + '\n\n' +
+      'Gaps:\n' + (currentGapsText || '(none marked)');
+
+    var mailto = 'mailto:' + encodeURIComponent(LEAD_EMAIL) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
+    statusEl.textContent = 'Opening your email client to send this to us…';
+    statusEl.className = 'ctastatus ok';
+    submitBtn.textContent = 'Opened';
   });
 
   renderSections();
