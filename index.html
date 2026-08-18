@@ -93,22 +93,6 @@ header.krheader{background:#fff;border-bottom:1px solid var(--border)}
 .krcrumb-path a:hover{text-decoration:underline}
 .krcrumb-path span[aria-hidden]{color:#6c757d;margin:0 8px}
 .krcrumb-path span:last-child{color:#6c757d}
-.quickcontact{margin-top:22px;background:var(--surface);border:1px solid var(--accent);
-  border-radius:12px;padding:22px 24px;display:flex;gap:18px;align-items:flex-start;
-  box-shadow:var(--shadow-sm)}
-.quickcontact .qc-photo img{display:block;width:88px;height:88px;border-radius:50%;
-  object-fit:cover}
-.quickcontact .qc-text{min-width:0}
-.quickcontact .qc-name{display:block;font-size:15px;font-weight:700;color:var(--brand);
-  text-decoration:none}
-.quickcontact .qc-name:hover{text-decoration:underline}
-.quickcontact .qc-title{font-size:13.5px;color:var(--ink-2);margin-top:3px;line-height:1.45}
-.quickcontact .qc-icons{display:flex;gap:6px;margin-top:12px}
-.quickcontact .qc-icons a{display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:6px;background:#212529;color:#fff;
-  transition:filter .12s ease}
-.quickcontact .qc-icons a:hover{filter:brightness(1.3)}
-
 footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
 .footwrap{max-width:1240px;margin:0 auto;padding:22px 22px 16px;
   display:grid;grid-template-columns:1fr 400px;gap:18px;align-items:start}
@@ -225,6 +209,24 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
 .gapempty{padding:16px;text-align:center;color:var(--ink-muted);font-size:13px;
   border:1px dashed var(--border);border-radius:10px}
 
+.ctacard{margin-top:34px;background:var(--raised);border:1px solid var(--border);
+  border-radius:14px;padding:26px;box-shadow:var(--shadow-sm)}
+.ctacard h2{margin:0 0 6px;font-size:19px;color:var(--ink)}
+.ctacard>p{margin:0 0 18px;font-size:13.5px;color:var(--ink-2);max-width:640px}
+.ctaform{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:640px}
+.ctaform label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--ink-2);font-weight:600}
+.ctaform input{font:inherit;font-size:13.5px;padding:9px 11px;border:1px solid var(--border);
+  border-radius:8px;background:var(--surface);color:var(--ink)}
+.ctaform input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.ctaform .full{grid-column:1/-1}
+.ctaform button{grid-column:1/-1;font:inherit;font-size:14px;font-weight:700;padding:11px 18px;
+  border-radius:8px;border:none;background:var(--accent);color:#212529;cursor:pointer;margin-top:4px}
+.ctaform button:hover{filter:brightness(.96)}
+.ctastatus{grid-column:1/-1;font-size:13px;margin-top:2px}
+.ctastatus.ok{color:var(--ok)}
+.ctastatus.err{color:var(--crit)}
+.ctadisclaimer{grid-column:1/-1;font-size:11px;color:var(--ink-muted);margin-top:2px}
+
 .reset-row{display:flex;justify-content:flex-end;margin-top:8px}
 .reset-row button{font:inherit;font-size:12px;color:var(--ink-muted);background:none;
   border:none;text-decoration:underline;cursor:pointer;padding:4px}
@@ -236,6 +238,7 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   .krheader-toprow{display:none}
   .krheader nav{display:none}
   .scorecard{grid-template-columns:1fr;text-align:center;position:static}
+  .ctaform{grid-template-columns:1fr}
   .footwrap{grid-template-columns:1fr}
 }
 </style>
@@ -373,22 +376,30 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   <div class="gaplist" id="gapList"></div>
 </div>
 
-<div class="quickcontact">
-  <div class="qc-photo">
-    <img src="alexander-smith.png" alt="Alexander Smith, CRCM, CFE" width="72" height="72" loading="lazy">
-  </div>
-  <div class="qc-text">
-    <a class="qc-name" href="https://kaufmanrossin.com/professionals/alexander-smith/" target="_blank" rel="noopener">Alexander Smith, CRCM, CFE</a>
-    <div class="qc-title">Risk Advisory Services Senior Manager at Kaufman Rossin, one of the Top 50 CPA and advisory firms in the U.S.</div>
-    <div class="qc-icons">
-      <a href="mailto:asmith@kaufmanrossin.com?subject=ExamReady%20BSA%2FAML%20checklist" aria-label="Email Alexander Smith">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-      </a>
-      <a href="https://www.linkedin.com/in/alexandersmith14/" target="_blank" rel="noopener" aria-label="Alexander Smith on LinkedIn">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zm7 0h3.8v1.9h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4z"/></svg>
-      </a>
-    </div>
-  </div>
+<div class="ctacard">
+  <h2>Want help closing these gaps before your exam?</h2>
+  <p>Send your results to Kaufman Rossin's BSA/AML advisory team. We'll follow
+    up with a short read on your top exposures and what a remediation plan
+    would look like — no obligation.</p>
+  <form class="ctaform" id="leadForm">
+    <label class="full">Name
+      <input type="text" name="name" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" required>
+    </label>
+    <label>Bank / Institution
+      <input type="text" name="institution">
+    </label>
+    <label>Role / Title</label>
+    <input type="text" name="role" style="grid-column:1/-1;margin-top:-8px">
+    <button type="submit">Send my results &amp; get help</button>
+    <div class="ctastatus" id="ctaStatus"></div>
+    <div class="ctadisclaimer">This checklist is a self-assessment tool for
+      internal planning purposes only. It does not constitute legal or
+      regulatory advice, and completing it does not guarantee any exam
+      outcome. Submitting this form sends your responses to Kaufman Rossin.</div>
+  </form>
 </div>
 
 </div>
@@ -563,6 +574,8 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   var STORAGE_KEY = 'examready_' + DATA.regulator + '_' + DATA.examArea;
   var VALUES = {have:1, partial:0.5, missing:0};
   var LABELS = {have:'Have', partial:'Partial', missing:'Missing'};
+  var currentScoreText = '';
+  var currentGapsText = '';
 
   var state = {};
   try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { state = {}; }
@@ -682,6 +695,8 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
     var fg = document.getElementById('gaugeFg');
     fg.setAttribute('stroke-dasharray', (circumference * pct/100) + ' ' + circumference);
     fg.setAttribute('stroke', answered === 0 ? 'var(--track)' : b.color);
+
+    currentScoreText = pct + '% (' + have + ' have / ' + partial + ' partial / ' + missing + ' missing / ' + unanswered + ' unanswered of ' + total + ')';
   }
 
   function renderGaps(){
@@ -701,6 +716,7 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
       empty.className = 'gapempty';
       empty.textContent = 'No gaps yet — mark items above to see them here.';
       list.appendChild(empty);
+      currentGapsText = '';
       return;
     }
     gapsBySection.forEach(function(g){
@@ -715,6 +731,9 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
       row.appendChild(txt);
       list.appendChild(row);
     });
+    currentGapsText = gapsBySection
+      .map(function(g){ return '[' + LABELS[g.v] + '] ' + g.sec + ': ' + g.text; })
+      .join('\n');
   }
 
   function resetAll(){
@@ -731,6 +750,41 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   });
   document.getElementById('resetBottom').addEventListener('click', function(){
     if (confirm('Clear all answers and start over?')) resetAll();
+  });
+
+  // Opens a prefilled email to the advisory team via mailto: -- no third
+  // party service to configure or debug, works everywhere a mail client is
+  // set up. The visitor's mail app handles actually sending it.
+  var LEAD_EMAIL = 'asmith@kaufmanrossin.com';
+  var leadForm = document.getElementById('leadForm');
+  var statusEl = document.getElementById('ctaStatus');
+  var submitBtn = leadForm.querySelector('button[type="submit"]');
+
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = leadForm.elements['name'].value;
+    var email = leadForm.elements['email'].value;
+    var institution = leadForm.elements['institution'].value;
+    var role = leadForm.elements['role'].value;
+
+    var subject = 'BSA/AML Checklist results — ' + name + (institution ? ' (' + institution + ')' : '');
+    var body =
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Institution: ' + (institution || '—') + '\n' +
+      'Role: ' + (role || '—') + '\n' +
+      'Readiness score: ' + currentScoreText + '\n\n' +
+      'Gaps:\n' + (currentGapsText || '(none marked)');
+
+    var mailto = 'mailto:' + encodeURIComponent(LEAD_EMAIL) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailto;
+
+    statusEl.textContent = 'Opening your email client to send this to us…';
+    statusEl.className = 'ctastatus ok';
+    submitBtn.textContent = 'Opened';
   });
 
   renderSections();
