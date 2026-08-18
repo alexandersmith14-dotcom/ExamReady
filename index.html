@@ -257,6 +257,15 @@ footer.sitefoot{margin-top:36px;background:var(--brand-bg)}
   .ctaform{grid-template-columns:1fr}
   .footwrap{grid-template-columns:1fr}
 }
+
+@media (max-width:600px){
+  /* .item is a flex row with fixed-width tristate buttons that don't shrink —
+     on a phone that squeezes the question text into a narrow wrapping column.
+     Stack question above buttons instead, buttons split evenly full-width. */
+  .item{flex-direction:column;align-items:stretch;gap:10px}
+  .tristate{width:100%}
+  .tristate button{flex:1}
+}
 </style>
 </head>
 <body data-today="">
